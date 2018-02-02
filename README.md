@@ -12,7 +12,7 @@
 ### Activity生命周期
 > 生命周期：onCreate()  onStart() onResum()  onPause() onStop() onDestroy() onReStart()  
 
-[](https://github.com/musejianglan/Interview4Android/blob/master/img/activity_life.png)
+![Activity生命周期](https://github.com/musejianglan/Interview4Android/blob/master/img/activity_life.png)
 
 
 * 启动一个A Activity，分别执行onCreate()、onStart()、onResume()方法。
