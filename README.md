@@ -40,6 +40,21 @@ android:launchMode = "standard"
 
 >singleInstance适合需要与程序分离开的页面。例如闹铃提醒，将闹铃提醒与闹铃设置分离。singleInstance不要用于中间页面，如果用于中间页面，跳转会有问题，比如：A -> B (singleInstance) -> C，完全退出后，在此启动，首先打开的是B。
 
+## （补充4大组件之外的）Fragment
+### 生命周期
+![fragment]{https://github.com/musejianglan/Interview4Android/blob/master/img/fragment_life.png}
+![fragment和activity生命周期比对](https://github.com/musejianglan/Interview4Android/blob/master/img/activity_fragment_life_compare.png)
+
+Fragment的生命周期方法主要有onAttach()、onCreate()、onCreateView()、onActivityCreated()、onstart()、onResume()、onPause()、onStop()、onDestroyView()、onDestroy()、onDetach()等11个方法。
+
+切换到该Fragment，分别执行onAttach()、onCreate()、onCreateView()、onActivityCreated()、onstart()、onResume()方法。
+锁屏，分别执行onPause()、onStop()方法。
+亮屏，分别执行onstart()、onResume()方法。
+覆盖，切换到其他Fragment，分别执行onPause()、onStop()、onDestroyView()方法。
+从其他Fragment回到之前Fragment，分别执行onCreateView()、onActivityCreated()、onstart()、onResume()方法。
+
+
+
 ## Service
 ### 生命周期
 > Service    
@@ -108,6 +123,21 @@ http为短连接：客户端发送请求都是需要服务端回送响应，请�
 
 HTTP连接使用的是"请求-响应"方式，不仅在请求时建立连接，而且客户端向服务器端请求后，服务器才返回数据。
 
+---
+# 优化
+### ANR
+ANR的全称application not responding 应用程序未响应。
+
+* 在android中Activity的最长执行时间是5秒。
+* BroadcastReceiver的最长执行时间则是10秒。
+* Service的最长执行时间则是20秒。
+> 超出执行时间就会产生ANR。注意：ANR是系统抛出的异常，程序是捕捉不了这个异常的。
+
+#### 解决方法:
+
+1. 运行在主线程里的任何方法都尽可能少做事情。特别是，Activity应该在它的关键生命周期方法 （如onCreate()和onResume()）里尽可能少的去做创建操作。（可以采用重新开启子线程的方式，然后使用Handler+Message 的方式做一些操作，比如更新主线程中的ui等）
+2. 应用程序应该避免在BroadcastReceiver里做耗时的操作或计算。但不再是在子线程里做这些任务（因为 BroadcastReceiver的生命周期短），替代的是，如果响应Intent广播需要执行一个耗时的动作的话，应用程序应该启动一个 Service。
+
 ### Android的数据存储方式，数据库，sd卡，SharedPreferences 这些
 ### Listview的优化，与scollview的区别
 ### view状态与重绘，view的绘制过程，view的事件分发机制，view的事件冲突处理
@@ -116,10 +146,13 @@ HTTP连接使用的是"请求-响应"方式，不仅在请求时建立连接，�
 ### Oom和anr异常引发的原因，怎么解决
 ### 了解一些常见的图片缓存技术
 
------
+---
 ## 源码
 Binder  
 LruCache  
 Handler  
 AsyncTask  
 EventBus  
+
+---
+大部分内容整理自互联网，来源太多无法一一标明；如有侵权，请联系我，马上删除：musejianglan@163.com
