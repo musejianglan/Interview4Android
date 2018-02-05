@@ -22,6 +22,25 @@
 * Activity之间的切换可以看出onPause()、onStop()这两个方法比较特殊，切换的时候onPause()方法不要加入太多耗时操作否则会影响体验。
 
 
+* 启动 Activiy：onCreate => onStart() => onResume(), Activity 进入运行状态.
+* Activity 退居后台 ( Home 或启动新 Activity ): onPause() => onStop().
+* Activity 返回前台: onRestart() => onStart() => onResume().
+* Activity 后台期间内存不足情况下当再次启动会重新执行启动流程。
+* 锁屏: onPause() => onStop().
+* 解锁: onStart() => onResume().
+#### a.生命周期详解
+1. onCreate() 会在activity第一次创建时被调用，完成初始化操作（家在布局、绑定事件等）
+2. onStart() **这个方法在活动由不可见变为可见的时候调用**
+3. onResume() 在活动准备好和用户进行交互的时候调用，**此时的活动一定位于返回栈的栈顶并且处于运行状态**
+4. onPause() 这个方法在系统准备去启动或者恢复另一个活动的时候调用。**通常会在这个方法中将一些及其消耗CPU的资源释放掉（比如显示地图或者大规模图形），以及保存一些关键数据（用户输入的数据）。但这个方法的执行速度一定要快，不然会影响新的栈顶活动的使用**
+5. onStop() 这个方法在activity完全不可见的时候调用。**它和 onPause()方法的主要区别在于，如果启动的新活动是一个对话框式的活动，那么 onPause() 方法会得到执行，而 onStop()方法并不会执行。**
+6. onDestroy() activity被销毁之前调用，之后的activity的状态变为销毁状态
+7. onRestart() activity 由停止状态变为运行状态之前调用，也就是活动被重新启动了
+
+#### b.三个时期
+* 完整生存期  活动在 onCreate()方法和 onDestroy() 方法之间所经历的，就是完整生存期。
+* 可见生存期 活动在 onStart() 方法和 onStop() 方法之间所经历的，就是可见生存期。在可见生存期内， 活动对于用户总是可见的， 即便有可能无法和用户进行交互。 我们可以通过这两个方法，合理地管理那些对用户可见的资源。比如在 onStart() 方法中对资源进行加载，而在 onStop() 方法中对资源进行释放， 从而保证处于停止状态的活动不会占用过多内存。
+* 前台生存期 活动在 onResume() 方法和 onPause() 方法之间所经历的，就是前台生存期。在前台生存期内， 活动总是处于运行状态的， 此时的活动是可以和用户进行相互的， 我们平时看到和接触最多的也这个状态下的活动。
 
 启动方式：1_ startActivity(intent)
 2_ startActivityForResult(intent)重写onActivityResult()方法，B页面通过setReult(),回传值  
@@ -85,6 +104,46 @@ Fragment的生命周期方法主要有onAttach()、onCreate()、onCreateView()�
 
 生命周期：Context.bindService()方式的生命周期： 绑定时,bindService -> onCreate() –> onBind()调用者退出了，即解绑定时,Srevice就会unbindService –>onUnbind() –> onDestory()Context.bindService()方式启动 Service的方法：绑定Service需要三个参数：bindService(intent, conn, Service.BIND_AUTO_CREATE);第一个：Intent对象第二个：ServiceConnection对象，创建该对象要实现它的onServiceConnected()和 onServiceDisconnected()来判断连接成功或者是断开连接第三个：如何创建Service，一般指定绑定的时候自动创建附代码
 ## 1.4Broadcast Receiver
+### 1.4.1.BroadcastReceiver内部基本原理
+BroadcastReceiver是一个全局的监听器，主要用于监听、接收应用发出的广播消息，并作出响应。采用了设计模式中的观察者模式，可将广播基于消息订阅者、消息发布者、消息中心解耦，通过Binder机制形成订阅关系。
+![广播](https://github.com/musejianglan/Interview4Android/blob/master/img/broadcast1.png)
+### 1.4.2.注册方式
+* 静态注册 在AndroidManifest.xml中通过<receiver>标签声明
+```
+  <receiver
+      android:enabled=["true" | "false"]
+      //此 broadcastReceiver 能否接收其他 App 发出的广播
+      //默认值是由 receiver 中有无 intent-filter 决定的：如果有 intent-filter，默认值为 true，否则为 false
+      android:exported=["true" | "false"]
+      android:icon="drawable resource"
+      android:label="string resource"
+      //继承 BroadcastReceiver 子类的类名
+      android:name=".mBroadcastReceiver"
+      //具有相应权限的广播发送者发送的广播才能被此 BroadcastReceiver 所接收；
+      android:permission="string"
+      // BroadcastReceiver 运行所处的进程
+      // 默认为 App 的进程，可以指定独立的进程
+      //注：Android 四大基本组件都可以通过此属性指定自己的独立进程
+      android:process="string" >
+
+      //用于指定此广播接收器将接收的广播类型
+      //本示例中给出的是用于接收网络状态改变时发出的广播
+       <intent-filter>
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+      </intent-filter>
+  </receiver>
+
+```
+* 动态注册 动态注册方式是通过调用 Context 下面的 registerReceiver() 进行注册，可以调用 unregisterReceiver() 进行注销。需要注意的是：动态广播最好在 Activity 的 onResume() 注册，并在 onPause() 进行注销。
+![两种方式比较](https://github.com/musejianglan/Interview4Android/blob/master/img/两种方式比较.png)
+
+### 1.4.3.广播类型
+> * 无序广播
+> 无序广播是完全异步的，通过context.sendBroadcast()方式来发送。对所有的广播接受者而言是无序的，所有接收者无法确定接收时序的顺序，导致无序广播无法被停止。
+> * 有序广播
+> 有序广播通过context.sendOrderedBroadcast()方法来发送。允许接受者设定优先级，它会按照接受者设定的优先级依次传播。而高优先级的接受者，可以对广播的数据进行处理或者停止掉此条广播的继续传播。广播会优先发送给优先级高（android:priority）的Receiver，而这个Receiver有权决定是继续发送还是终止掉。
+> * 粘性广播Sticky
+> 
 ## 1.5Content Provider
 ---
 # 二、布局
