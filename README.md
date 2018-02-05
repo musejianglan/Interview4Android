@@ -84,7 +84,7 @@ android:launchMode = "standard"
 
 ## 1.2.（补充4大组件之外的）Fragment
 ### 1.2.1生命周期
-![fragment]{https://github.com/musejianglan/Interview4Android/blob/master/img/fragment_life.png}
+![fragment](https://github.com/musejianglan/Interview4Android/blob/master/img/fragment_life.png)
 ![fragment和activity生命周期比对](https://github.com/musejianglan/Interview4Android/blob/master/img/activity_fragment_life_compare.png)
 
 Fragment的生命周期方法主要有onAttach()、onCreate()、onCreateView()、onActivityCreated()、onstart()、onResume()、onPause()、onStop()、onDestroyView()、onDestroy()、onDetach()等11个方法。
@@ -98,11 +98,28 @@ Fragment的生命周期方法主要有onAttach()、onCreate()、onCreateView()�
 
 
 ## 1.3Service
-### 1.3.1生命周期
+### 1.3.1.启动方式
+* started
+* bind
+
+> 将 Service 在 AndroidMenifest.xml 文件中配置成私有的，不允许其他应用访问。将 android:exported 属性设为 false，表示不允许其他应用程序启动本应用的组件，即便是显式 Intent 也不行（even when using an explicit intent）。这可以防止其他应用程序启动您的 Service 组件。
+
+### 1.3.2生命周期
+![生命周期](https://github.com/musejianglan/Interview4Android/blob/master/img/service_life.png)
 > Service    
 启动方式：1、context.startService()；启动时：startService -> onCreate()-> onStart()，停止时：onstopservice()->onDestroy()。如果调用者直接退出而没有停止Service，则service会一直在后台运行context.startService()启动服务。服务未创建时，系统会先条用服务的onCreate()方法，接着调用onStart()方法。如果调用
 
 生命周期：Context.bindService()方式的生命周期： 绑定时,bindService -> onCreate() –> onBind()调用者退出了，即解绑定时,Srevice就会unbindService –>onUnbind() –> onDestory()Context.bindService()方式启动 Service的方法：绑定Service需要三个参数：bindService(intent, conn, Service.BIND_AUTO_CREATE);第一个：Intent对象第二个：ServiceConnection对象，创建该对象要实现它的onServiceConnected()和 onServiceDisconnected()来判断连接成功或者是断开连接第三个：如何创建Service，一般指定绑定的时候自动创建附代码
+
+### 1.3.3.IntentService
+* 默认在子线程中处理回传到 onStartCommand() 方法中的 Intent；
+* 在重写的 onHandleIntent() 方法中处理按时间排序的 Intent 队列，所以不用担心多线程（multi-threading）带来的问题。
+* 当所有请求处理完成后，自动停止 Service，无需手动调用 stopSelf() 方法；
+* 默认实现了 onBind() 方法，并返回 null；
+* 默认实现了 onStartCommand() 方法，并将回传的 Intent 以序列的形式发送给 onHandleIntent()，您只需重写该方法并处理 Intent 即可。
+
+
+
 ## 1.4Broadcast Receiver
 ### 1.4.1.BroadcastReceiver内部基本原理
 BroadcastReceiver是一个全局的监听器，主要用于监听、接收应用发出的广播消息，并作出响应。采用了设计模式中的观察者模式，可将广播基于消息订阅者、消息发布者、消息中心解耦，通过Binder机制形成订阅关系。
@@ -143,7 +160,16 @@ BroadcastReceiver是一个全局的监听器，主要用于监听、接收应用
 > * 有序广播
 > 有序广播通过context.sendOrderedBroadcast()方法来发送。允许接受者设定优先级，它会按照接受者设定的优先级依次传播。而高优先级的接受者，可以对广播的数据进行处理或者停止掉此条广播的继续传播。广播会优先发送给优先级高（android:priority）的Receiver，而这个Receiver有权决定是继续发送还是终止掉。
 > * 粘性广播Sticky
-> 
+> 通过context.sendStickyBroadcast()方式发送广播。需要在AndroidManifest中注册BROADCAST_STICKY权限。系统会保留最后一条Sticky广播，并且一直保留下去。如果我们发送的 Sticky 广播不被取消，当有一个接收者的时候就会收到它，再来一个还是能收到。所有我们需要在合适的实际，调用 removeStickyBoradcast() 方法，将其取消掉。
+
+#### a.发送广播只有自己（本进程）能接收到
+* 发送广播的时候直接通过 Intent.setPackage(packageName) 指定广播接收器的包名
+* 使用LocalBroadcast；这个的使用非常的简单，只需要将 Broadcast 的对应 API，替换为 LocalBroadcast 为我们提供的 API 即可。LBM 是一个单例对象，可以使用 LocalBroadcastManager.getInstance(Context context) 方法获取到。
+
+### 1.4.4.BroadcastReceiver 的生命周期
+> BroadcastReceiver 有生命周期，但比较短，而且很短。当它的 onReceive() 方法执行完成后，它的生命周期也就随之结束了。这时候由于 BroadcastReceiver 已经不处于 active 状态，所以极有可能被系统干掉。也就是说如果你在 onReceive() 去开线程进行异步操作或者打开 Dialog 都有可能在没达到你要的结果时进程就被系统杀掉了。
+>  Receiver 也是运行在主线程的，不能做耗时操作。虽然超时时间相对于 Activity 的 5 秒更高，有足足的 10 秒。
+
 ## 1.5Content Provider
 ---
 # 二、布局
@@ -204,10 +230,96 @@ Socket又称套接字，在程序内部提供了与外界通信的端口，即�
 http为短连接：客户端发送请求都是需要服务端回送响应，请求结束后，主动释放链接，因此为短连接。  
 
 HTTP连接使用的是"请求-响应"方式，不仅在请求时建立连接，而且客户端向服务器端请求后，服务器才返回数据。
+---
+
+# 四、Handler
+## 4.1.组成
+* Handler 负责向消息池发送各种消息事件和处理相应的消息事件
+* Message 信息载体
+* MessageQueue 消息队列。按时序将消息插入队列，最小的时间戳将被优先处理
+* Looper 负责从消息队列中读取西消息，然后分发给对应的handler进行处理，它是一个死循环，不断的调用MessageQueue.next()去读取消息，在没有消息分发时变成阻塞状态。
+
+> 在工作线程中创建自己的消息队列必须调用Looper。prepare()，并且在一个线程中只能调用一次。还必须使用Looper.loop()开启消息循环。
+
+> 主线程中会默认调用主线程的Looper。一个线程中只能由一个Looper和一个MessageQueue对象
+```
+子线程中标准写法：
+Looper.prepare();
+Handler mHandler = new Handler() {
+   @Override
+   public void handleMessage(Message msg) {
+          Log.i(TAG, "在子线程中定义Handler，并接收到消息。。。");
+   }
+};
+Looper.loop();
+
+```
+
+```
+UI线程中最好做法：
+private static final class MyHandler extends Handler{
+        private final WeakReference<MainActivity> mWeakReference;
+
+        public MyHandler(MainActivity activity){
+            mWeakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            MainActivity activity = mWeakReference.get();
+            if (activity != null){
+                // 开始写业务代码
+            }
+        }
+    }
+
+private MyHandler mMyHandler = new MyHandler(this);
+
+
+```
+
+## 4.2 HandlerThread
+
+HandlerThread 是 Android API 提供的一个便捷的类，使用它可以让我们快速地创建一个带有 Looper 的线程，有了 Looper 这个线程，我们又可以生成 Handler，本质上也就是一个建立了内部 Looper 的普通 Thread。
+
+
+```
+// 1. 创建 HandlerThread 并准备 Looper
+handlerThread = new HandlerThread("myHandlerThread");
+handlerThread.start();
+
+// 2. 创建 Handler 并绑定 handlerThread 的 Looper
+new Handler(handlerThread.getLooper()).post(new Runnable() {
+    @Override
+    public void run() {
+          // 注意：Handler 绑定了子线程的 Looper，这个方法也会运行在子线程，不可以更新 UI
+          MLog.i("Handler in " + Thread.currentThread().getName());
+    }
+});
+
+// 3. 退出
+@Override public void onDestroy() {
+    super.onDestroy();
+    handlerThread.quit();
+}
+
+```
+
+### 4.2.1.HandlerThread 的 quit() 和 quitSafety() 有啥区别？
+
+两个方法作用都是结束 Looper 的运行。它们的区别是，quit() 方法会直接移除 MessageQueue 中的所有消息，然后终止 MesseageQueue，而 quitSafety() 会将 MessageQueue 中已有的消息处理完成后（不再接收新消息）再终止 MessageQueue。
+
+
 
 ---
-# 四、优化
-### 4.1.1ANR
+# 五、Android的数据存储方式
+## 5.1.数据库
+## 5.2.sd卡
+## 5.3.SharedPreferences
+
+# 六、优化
+### 6.1.1ANR
 ANR的全称application not responding 应用程序未响应。
 
 * 在android中Activity的最长执行时间是5秒。
@@ -220,7 +332,7 @@ ANR的全称application not responding 应用程序未响应。
 1. 运行在主线程里的任何方法都尽可能少做事情。特别是，Activity应该在它的关键生命周期方法 （如onCreate()和onResume()）里尽可能少的去做创建操作。（可以采用重新开启子线程的方式，然后使用Handler+Message 的方式做一些操作，比如更新主线程中的ui等）
 2. 应用程序应该避免在BroadcastReceiver里做耗时的操作或计算。但不再是在子线程里做这些任务（因为 BroadcastReceiver的生命周期短），替代的是，如果响应Intent广播需要执行一个耗时的动作的话，应用程序应该启动一个 Service。
 
-### Android的数据存储方式，数据库，sd卡，SharedPreferences 这些
+
 ### Listview的优化，与scollview的区别
 ### view状态与重绘，view的绘制过程，view的事件分发机制，view的事件冲突处理
 ### Android多线程异步机制，AsyncTask工作原理与源码实现，Handler,Message,Looper异步实现机制与源码分析
