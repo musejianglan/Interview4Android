@@ -350,3 +350,7 @@ EventBus
 
 ---
 大部分内容整理自互联网，来源太多无法一一标明；如有侵权，请联系我，马上删除：musejianglan@163.com
+
+
+**欢迎扫描下方二维码或者公众号搜索「musejianglan」关注我的微信公众号**
+![](https://github.com/musejianglan/Interview4Android/blob/master/img/qrcode.jpg)
