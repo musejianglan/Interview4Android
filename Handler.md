@@ -8,6 +8,9 @@
 > 在工作线程中创建自己的消息队列必须调用Looper。prepare()，并且在一个线程中只能调用一次。还必须使用Looper.loop()开启消息循环。
 
 > 主线程中会默认调用主线程的Looper。一个线程中只能由一个Looper和一个MessageQueue对象
+
+Handler机制是Android中异步消息处理机制，也就是异步消息处理线程启动后会进入一个无限的循环体之中，每循环一次，从其内部的消息队列中取出一个消息，然后回调相应的消息处理函数，执行完成一个消息后则继续循环。若消息队列为空，线程则会阻塞等待。而他们之间的关系就是，消息循环Looper负责创建一个消息队列MessageQueue，而消息队列MessageQueue是消息Message的容器，也就是装消息Message的地方，然后进入一个无限循环体不断从该消息队列MessageQueue中读取消息，而消息的创建者和处理者就是一个或多个Handler。
+
 ```
 子线程中标准写法：
 Looper.prepare();
