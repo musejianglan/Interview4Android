@@ -165,7 +165,8 @@ Android 7.0 支持用户设置显示尺寸，以放大或缩小屏幕上的所�
 library "libandroid_runtime.so"("/system/lib/libandroid_runtime.so") needed
 or dlopened by "/data/app/com.popular-app.android-2/lib/arm/libapplib.
 so" is not accessible for the namespace "classloader-namespace" -
-the access is temporarily granted as a workaround for https://b/26394120```
+the access is temporarily granted as a workaround for https://b/26394120
+```
 
 这些 logcat 警告通知您哪个库正在尝试访问私有平台 API，但不会导致您的应用崩溃。但是，如果应用面向 API 级别 24 或更高级别，logcat 会生成以下运行时错误，您的应用可能会崩溃：
 
