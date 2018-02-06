@@ -208,7 +208,7 @@ at java.lang.System.loadLibrary(System.java:1602)
 
 ⑺如果 Android 7.0 上一项有 DELETE_PACKAGES 权限的应用尝试删除一个软件包，但另一项应用已经安装了这个软件包，则系统需要用户进行确认。在这种情况下，应用在调用PackageInstaller.uninstall()时预计的返回状态应为STATUS_PENDING_USER_ACTION。
 
-⑻名为 Crypto 的 JCA 提供程序已弃用，因为它仅有的 SHA1PRNG 算法为弱加密。应用无法再使用 SHA1PRNG(不安全地)派生密钥，因为不再提供此提供程序。
+⑻名为 Crypto 的 JCA 提供程序已弃用，因为它仅有的 SHA1PRNG 算法为弱加密。应用无法再使用 SHA1PRNG(不安全地)派生密钥，因为不再提供此提供程序。  
 
 
 ## Android 8.0
@@ -217,7 +217,6 @@ at java.lang.System.loadLibrary(System.java:1602)
 通知渠道是由应用自行定义的通知内容类别，借助渠道，开发者可以让用户对不同种类的通知进行精细控制，用户可以单独拦截或更改每个渠道的行为，而不是统一管理应用的所有通知。
 
 创建通知渠道的步骤：
-
 1. 创建 NotificationChannel 对象，并设置应用内唯一的通知 ID。
 2. 配置通知渠道的属性，比如提示声音等。
 3. 在 NotificationManager 中注册通知渠道对象。
