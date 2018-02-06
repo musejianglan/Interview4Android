@@ -221,7 +221,7 @@ at java.lang.System.loadLibrary(System.java:1602)
 1. 创建 NotificationChannel 对象，并设置应用内唯一的通知 ID。
 2. 配置通知渠道的属性，比如提示声音等。
 3. 在 NotificationManager 中注册通知渠道对象。
-![daima](https://github.com/musejianglan/Interview4Android/blob/master/img/notification_channel.png)
+![111](https://github.com/musejianglan/Interview4Android/blob/master/img/notification_channel.png)
 
 ### 画中画模式 — PIP
 
