@@ -58,6 +58,8 @@ AsyncTask
 EventBus  
 
 ---
+[Android校招面试指南](https://github.com/LRH1993/android_interview)
+[Everything you need to know to get the job.](https://github.com/kdn251/interviews)
 [面试题](https://github.com/musejianglan/Interview4Android/blob/master/面试题.md)
 ---
 大部分内容整理自互联网，来源太多无法一一标明；如有侵权，请联系我，马上删除：musejianglan@163.com
