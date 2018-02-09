@@ -1,10 +1,8 @@
 # Interview4Android
 为Android面试整理的知识树
 
----
+
 [四大组件](https://github.com/musejianglan/Interview4Android/blob/master/四大组件.md)
----
-# 二、布局
 ---
 
 [网络通信](https://github.com/musejianglan/Interview4Android/blob/master/网络通信.md)
@@ -12,10 +10,9 @@
 
 [Handler](https://github.com/musejianglan/Interview4Android/blob/master/Handler.md)
 ---
-# 五、Android的数据存储方式
-## 5.1.数据库
-## 5.2.sd卡
-## 5.3.SharedPreferences
+
+[Android的数据存储方式](https://github.com/musejianglan/Interview4Android/blob/master/Android的数据存储方式.md)
+---
 
 # 六、优化
 ### 6.1.1ANR
@@ -48,6 +45,7 @@ ANR的全称application not responding 应用程序未响应。
 
 3. java虚拟机与Dalvik虚拟机架构不同。java虚拟机基于栈架构。程序在运行时虚拟机需要频繁的从栈上读取或写入数据。这过程需要更多的指令分派与内存访问次数，会耗费不少CPU时间，对于像手机设备资源有限的设备来说，这是相当大的一笔开销。Dalvik虚拟机基于寄存器架构，数据的访问通过寄存器间直接传递，这样的访问方式比基于栈方式快的多.
 ---
+
 [Android版本新特性](https://github.com/musejianglan/Interview4Android/blob/master/Android新版本特性.md)
 ---
 ## 源码
@@ -58,9 +56,10 @@ AsyncTask
 EventBus  
 
 ---
-[Android校招面试指南](https://github.com/LRH1993/android_interview)
-[Everything you need to know to get the job.](https://github.com/kdn251/interviews)
-[LearningNotes](https://github.com/francistao/LearningNotes)
+
+[Android校招面试指南](https://github.com/LRH1993/android_interview)  
+[Everything you need to know to get the job.](https://github.com/kdn251/interviews)  
+[LearningNotes](https://github.com/francistao/LearningNotes)  
 
 ---
 
