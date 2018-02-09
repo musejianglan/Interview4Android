@@ -1,17 +1,22 @@
 # Interview4Android
 为Android面试整理的知识树
 
+## Java
 
+[Java集合](https://github.com/musejianglan/Interview4Android/blob/master/Java/Java集合.md)
+
+## Android
 [四大组件](https://github.com/musejianglan/Interview4Android/blob/master/Android/四大组件.md)
----
-
-[网络通信](https://github.com/musejianglan/Interview4Android/blob/master/Android/网络通信.md)
 ---
 
 [Handler](https://github.com/musejianglan/Interview4Android/blob/master/Android/Handler.md)
 ---
 
 [Android的数据存储方式](https://github.com/musejianglan/Interview4Android/blob/master/Android/Android的数据存储方式.md)
+
+---
+
+[网络通信](https://github.com/musejianglan/Interview4Android/blob/master/Android/网络通信.md)
 ---
 
 # 六、优化
