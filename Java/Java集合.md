@@ -23,16 +23,16 @@ Java集合就像一种容器，可以把多个对象（实际上是对象的引�
 
 Java的集合类主要由两个接口派生而出：Collection和Map,Collection和Map是Java集合框架的根接口。
 
-![java_collection]()
+![java_collection](https://github.com/musejianglan/Interview4Android/blob/master/img/java_collection.png)
 
 Map实现类用于保存具有映射关系的数据。Map保存的每项数据都是key-value对，也就是由key和value两个值组成。Map里的key是不可重复的，key用户标识集合里的每项数据。
 
-![java_map]()  
+![java_map](https://github.com/musejianglan/Interview4Android/blob/master/img/java_map.png)  
 
 ## Collection接口
 Collection接口是Set,Queue,List的父接口。Collection接口中定义了多种方法可供其子类进行实现，以实现数据操作。
 
-![collection_method]()  
+![collection_method](https://github.com/musejianglan/Interview4Android/blob/master/img/collection_method.png)  
 
 Collection用法有：添加元素，删除元素，返回Collection集合的个数以及清空集合等。 其中重点介绍iterator()方法，该方法的返回值是Iterator
 
@@ -67,7 +67,7 @@ List作为Collection接口的子接口，可以使用Collection接口里的全�
 
 Queue用户模拟队列这种数据结构，队列通常是指“先进先出”(FIFO，first-in-first-out)的容器。队列的头部是在队列中存放时间最长的元素，队列的尾部是保存在队列中存放时间最短的元素。新元素插入（offer）到队列的尾部，访问元素（poll）操作会返回队列头部的元素。通常，队列不允许随机访问队列中的元素。
 
-![queue]()
+![queue](https://github.com/musejianglan/Interview4Android/blob/master/img/queue.png)
 
 ## Map集合
 
