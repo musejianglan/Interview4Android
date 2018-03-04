@@ -6,6 +6,9 @@
 [Java集合](https://github.com/musejianglan/Interview4Android/blob/master/Java/Java集合.md)
 ---
 
+[java中的栈和堆](https://github.com/musejianglan/Interview4Android/blob/master/Java/java中的栈和堆.md)
+---
+
 ## Android
 [四大组件](https://github.com/musejianglan/Interview4Android/blob/master/Android/四大组件.md)
 ---
