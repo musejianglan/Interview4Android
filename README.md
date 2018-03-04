@@ -53,6 +53,13 @@ ANR的全称application not responding 应用程序未响应。
 
 [Android版本新特性](https://github.com/musejianglan/Interview4Android/blob/master/Android/Android新版本特性.md)
 ---
+
+[Android面试题](https://github.com/musejianglan/Interview4Android/blob/master/面试题.md)
+---
+
+[Java面试题](https://github.com/musejianglan/Interview4Android/blob/master/Java面试题.md)
+---
+
 ## 源码
 Binder  
 LruCache  
@@ -68,8 +75,7 @@ EventBus
 
 ---
 
-[面试题](https://github.com/musejianglan/Interview4Android/blob/master/面试题.md)
----
+
 大部分内容整理自互联网，来源太多无法一一标明；如有侵权，请联系我，马上删除：musejianglan@163.com
 
 
