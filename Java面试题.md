@@ -20,7 +20,7 @@ public class Main {
     static  int arr[] = new int[10];
     public static void main(String[] bbbbbbbbbbb) {
 
-       System.out.println(arr[0]);
+       System.out.println(arr[0]);;
     }
 }
 
