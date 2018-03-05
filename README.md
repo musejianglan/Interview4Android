@@ -13,6 +13,9 @@
 [四大组件](https://github.com/musejianglan/Interview4Android/blob/master/Android/四大组件.md)
 ---
 
+[Android_res](https://github.com/musejianglan/Interview4Android/blob/master/Android/Android_res.md)
+---
+
 [Handler](https://github.com/musejianglan/Interview4Android/blob/master/Android/Handler.md)
 ---
 
