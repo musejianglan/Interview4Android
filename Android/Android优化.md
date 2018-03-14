@@ -13,6 +13,15 @@ ANR的全称application not responding 应用程序未响应。
 2. 应用程序应该避免在BroadcastReceiver里做耗时的操作或计算。但不再是在子线程里做这些任务（因为 BroadcastReceiver的生命周期短），替代的是，如果响应Intent广播需要执行一个耗时的动作的话，应用程序应该启动一个 Service。
 
 
+### FC（Forced Close）
+原因 
+
+
+1. Error 【OOM(out of memory error)内存耗尽 & StackOverFlowError堆栈溢出】
+2. RuntimeException
+
+
+
 ### OOM（OutOfMemory）
 
 解决OOM的常用方案
