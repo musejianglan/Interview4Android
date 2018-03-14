@@ -31,6 +31,9 @@
 [Android优化](https://github.com/musejianglan/Interview4Android/blob/master/Android/Android优化.md)
 ---
 
+[bitmap&图片](https://github.com/musejianglan/Interview4Android/blob/master/Android/bitmap&图片.md)
+---
+
 ---
 
 ### Dalvik虚拟机与java虚拟机的区别
